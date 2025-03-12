@@ -4,11 +4,15 @@ export const fields = {
      *   Credits:
      *   - Zyvr (zyvrmaccom) | https://gist.github.com/l1x/6160913
      *   - anonidiot | https://github.com/anonidiot/Wizardry8Editor
+     *   - https://i45.narod.ru/wiz/
      *
      *   Notes:
      *    - The order of characters' attributes in the .sav file is L1-R1-L2-R2-L3-R3.
      *    - Each party item is made of 12 bytes.
      *    - Empty item slot = FF FF FF FF 00 00 00 00 00 00 00 00.
+     *    - Max 500 items in party inventory.
+     *    - XP/level: https://www.zimlab.com/wizardry/recovered/flamestryke/wizardry8/charinfow8/experience.html
+     *    - Items: https://www.tk421.net/wizardry/wiz8items.shtml
      */
 
     header: {offset: 0x0000, size: 4, type: 'char', label: 'File Header', segment: 'meta'},
@@ -23,14 +27,16 @@ export const fields = {
     selectedCharIdx: {offset: 0x001d, size: 4, type: 'int', label: 'Selected Character Index', segment: 'party'}, // index = 0-7
     partyItemsCount: {offset: 0x1791, size: 4, type: 'int', label: 'Items in Party Inventory', segment: 'party'},
 
+    // TODO current map
     // TODO position in map
+    // TODO position heading
 
     // ----- Party Inventory
     itemId: {offset: 0x0000, size: 4, type: 'int', label: 'Item ID', segment: 'inv'},
     itemCount: {offset: 0x0004, size: 1, type: 'int', label: 'Item Count', segment: 'inv'},
     itemCharges: {offset: 0x0005, size: 1, type: 'int', label: 'Item Charges', segment: 'inv'},
-    itemIsIdentified: {offset: 0x0006, size: 1, type: 'int', label: 'Item Is Identified', segment: 'inv'},
-    itemIsUncursed: {offset: 0x0010, size: 1, type: 'int', label: 'Item Is Uncursed', segment: 'inv'},
+    itemIsIdentified: {offset: 0x0006, size: 1, type: 'int', label: 'Item Has Been Identified', segment: 'inv'},
+    itemIsUncursed: {offset: 0x000A, size: 1, type: 'int', label: 'Item Has Been Uncursed', segment: 'inv'},
 
     // TODO add party items editable table to UI
 
@@ -38,6 +44,7 @@ export const fields = {
     nickname: {offset: 0x0000, size: 20, type: 'char', label: 'Nickname', segment: 'pc'},
     name: {offset: 0x0014, size: 32, type: 'char', label: 'Name', segment: 'pc'},
 
+    // TODO portrait
     // TODO profession
     // TODO gender
     // TODO race
@@ -45,6 +52,7 @@ export const fields = {
     // TODO armor class (base/avg)
     // TODO carried items
     // TODO equipped items
+    // TODO spells
 
     // Level
     level: {offset: 0x0084, size: 4, type: 'int', label: 'Total Level', segment: 'pc'},
@@ -138,18 +146,18 @@ export const fields = {
     alchemyMod: {offset: 0x057A, size: 4, type: 'int', label: 'Alchemy (mod)', segment: 'pc'},
     psionics: {offset: 0x059C, size: 4, type: 'int', label: 'Psionics', segment: 'pc'},
     psionicsMod: {offset: 0x06A0, size: 4, type: 'int', label: 'Psionics (mod)', segment: 'pc'},
-    fireMagic: {offset: 0x05C2, size: 4, type: 'int', label: 'Fire Magic Skill', segment: 'pc'},
-    fireMagicMod: {offset: 0x05C6, size: 4, type: 'int', label: 'Fire Magic Skill (mod)', segment: 'pc'},
-    waterMagic: {offset: 0x05E8, size: 4, type: 'int', label: 'Water Magic Skill', segment: 'pc'},
-    waterMagicMod: {offset: 0x05EC, size: 4, type: 'int', label: 'Water Magic Skill (mod)', segment: 'pc'},
-    airMagic: {offset: 0x060E, size: 4, type: 'int', label: 'Air Magic Skill', segment: 'pc'},
-    airMagicMod: {offset: 0x0612, size: 4, type: 'int', label: 'Air Magic Skill (mod)', segment: 'pc'},
-    earthMagic: {offset: 0x0634, size: 4, type: 'int', label: 'Earth Magic Skill', segment: 'pc'},
-    earthMagicMod: {offset: 0x0638, size: 4, type: 'int', label: 'Earth Magic Skill (mod)', segment: 'pc'},
-    mentalMagic: {offset: 0x065A, size: 4, type: 'int', label: 'Mental Magic Skill', segment: 'pc'},
-    mentalMagicMod: {offset: 0x065E, size: 4, type: 'int', label: 'Mental Magic Skill (mod)', segment: 'pc'},
-    divineMagic: {offset: 0x0680, size: 4, type: 'int', label: 'Divine Magic Skill', segment: 'pc'},
-    divineMagicMod: {offset: 0x0684, size: 4, type: 'int', label: 'Divine Magic Skill (mod)', segment: 'pc'},
+    fireMagic: {offset: 0x05C2, size: 4, type: 'int', label: 'Fire Magic', segment: 'pc'},
+    fireMagicMod: {offset: 0x05C6, size: 4, type: 'int', label: 'Fire Magic (mod)', segment: 'pc'},
+    waterMagic: {offset: 0x05E8, size: 4, type: 'int', label: 'Water Magic', segment: 'pc'},
+    waterMagicMod: {offset: 0x05EC, size: 4, type: 'int', label: 'Water Magic (mod)', segment: 'pc'},
+    airMagic: {offset: 0x060E, size: 4, type: 'int', label: 'Air Magic', segment: 'pc'},
+    airMagicMod: {offset: 0x0612, size: 4, type: 'int', label: 'Air Magic (mod)', segment: 'pc'},
+    earthMagic: {offset: 0x0634, size: 4, type: 'int', label: 'Earth Magic', segment: 'pc'},
+    earthMagicMod: {offset: 0x0638, size: 4, type: 'int', label: 'Earth Magic (mod)', segment: 'pc'},
+    mentalMagic: {offset: 0x065A, size: 4, type: 'int', label: 'Mental Magic', segment: 'pc'},
+    mentalMagicMod: {offset: 0x065E, size: 4, type: 'int', label: 'Mental Magic (mod)', segment: 'pc'},
+    divineMagic: {offset: 0x0680, size: 4, type: 'int', label: 'Divine Magic', segment: 'pc'},
+    divineMagicMod: {offset: 0x0684, size: 4, type: 'int', label: 'Divine Magic (mod)', segment: 'pc'},
     // Special skills
     powerStrike: {offset: 0x06A6, size: 4, type: 'int', label: 'Power Strike', segment: 'pc'},
     powerStrikeMod: {offset: 0x06AA, size: 4, type: 'int', label: 'Power Strike (mod)', segment: 'pc'},
@@ -159,15 +167,15 @@ export const fields = {
     ironWillMod: {offset: 0x06F6, size: 4, type: 'int', label: 'Iron Will (mod)', segment: 'pc'}, // fixed
     ironSkin: {offset: 0x0718, size: 4, type: 'int', label: 'Iron Skin', segment: 'pc'},
     ironSkinMod: {offset: 0x071C, size: 4, type: 'int', label: 'Iron Skin (mod)', segment: 'pc'},
-    reflextion: {offset: 0x073E, size: 4, type: 'int', label: 'Reflection', segment: 'pc'},
-    reflextionMod: {offset: 0x0742, size: 4, type: 'int', label: 'Reflection (mod)', segment: 'pc'},
+    reflextion: {offset: 0x073E, size: 4, type: 'int', label: 'Reflextion', segment: 'pc'},
+    reflextionMod: {offset: 0x0742, size: 4, type: 'int', label: 'Reflextion (mod)', segment: 'pc'},
     snakeSpeed: {offset: 0x0764, size: 4, type: 'int', label: 'Snake Speed', segment: 'pc'}, // fixed
     snakeSpeedMod: {offset: 0x0768, size: 4, type: 'int', label: 'Snake Speed (mod)', segment: 'pc'},
     eagleEye: {offset: 0x078A, size: 4, type: 'int', label: 'Eagle Eye', segment: 'pc'},
     eagleEyeMod: {offset: 0x078E, size: 4, type: 'int', label: 'Eagle Eye (mod)', segment: 'pc'},
     // XP
-    xp: {offset: 0x09E8, size: 4, type: 'int', label: 'XP (current)', segment: 'pc'},
-    xpNextLevel: {offset: 0x09EC, size: 4, type: 'int', label: 'XP (to next lvl)', segment: 'pc'},
+    xp: {offset: 0x09E8, size: 4, type: 'uint', label: 'XP (current)', segment: 'pc'},
+    xpNextLevel: {offset: 0x09EC, size: 4, type: 'uint', label: 'XP (to next lvl)', segment: 'pc'},
     // HP
     hpMax: {offset: 0x0B08, size: 4, type: 'int', label: 'HP (max)', segment: 'pc'},
     hpCurrent: {offset: 0x0B0C, size: 4, type: 'int', label: 'HP (current)', segment: 'pc'},
