@@ -33,6 +33,7 @@ npm run build
 Thanks to the following people for their work on the Wizardry 8 file formats:
 - Zyvr (zyvrmaccom) | https://gist.github.com/l1x/6160913
 - anonidiot | https://github.com/anonidiot/Wizardry8Editor
+- https://i45.narod.ru/wiz/
 
 ## License
 
