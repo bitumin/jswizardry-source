@@ -40,8 +40,8 @@ export const fields = {
 
     // ----- Player Character: Recruited or Created
     // inParty: {offset: 0x0004, size: 1, type: 'int', label: 'In Party', segment: 'pc'}, // TODO if we shift all pc segment values +5 bytes, we could use this one as well
-    nickname: {offset: 0x0000, size: 14, type: 'char', label: 'Nickname', segment: 'pc'},
-    name: {offset: 0x0014, size: 27, type: 'char', label: 'Name', segment: 'pc'},
+    nickname: {offset: 0x0000, size: 9, type: 'char', label: 'Nickname', segment: 'pc'},
+    name: {offset: 0x0014, size: 39, type: 'char', label: 'Name', segment: 'pc'},
     currentProfession: {offset: 0x0064, size: 4, type: 'int', label: 'Current Profession', segment: 'pc'},
     startingProfession: {offset: 0x0068, size: 4, type: 'int', label: 'Starting Profession', segment: 'pc'},
     race: {offset: 0x006C, size: 4, type: 'int', label: 'Race', segment: 'pc'},
@@ -88,8 +88,8 @@ export const fields = {
     axeMod: {offset: 0x01C4, size: 4, type: 'int', label: 'Axe (mod)', segment: 'pc'},
     polearm: {offset: 0x01E6, size: 4, type: 'int', label: 'Polearm', segment: 'pc'},
     polearmMod: {offset: 0x01EA, size: 4, type: 'int', label: 'Polearm (mod)', segment: 'pc'},
-    mace: {offset: 0x0210, size: 4, type: 'int', label: 'Mace & Flail', segment: 'pc'}, // fixed
-    maceMod: {offset: 0x0214, size: 4, type: 'int', label: 'Mace & Flail (mod)', segment: 'pc'},
+    mace: {offset: 0x020C, size: 4, type: 'int', label: 'Mace & Flail', segment: 'pc'}, // fixed
+    maceMod: {offset: 0x0210, size: 4, type: 'int', label: 'Mace & Flail (mod)', segment: 'pc'},
     dagger: {offset: 0x0232, size: 4, type: 'int', label: 'Dagger', segment: 'pc'},
     daggerMod: {offset: 0x0236, size: 4, type: 'int', label: 'Dagger (mod)', segment: 'pc'},
     staff: {offset: 0x0258, size: 4, type: 'int', label: 'Staff & Wand', segment: 'pc'},
