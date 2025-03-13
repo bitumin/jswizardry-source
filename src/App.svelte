@@ -1,6 +1,7 @@
 <script>
     import {onMount} from "svelte";
     import {WizardrySavHexEditor} from "./lib/WizardrySavHexEditor";
+    import {items} from "./data/items";
     import Input from "./Input.svelte";
     import CharacterTab from "./CharacterTab.svelte";
     import ItemTd from "./ItemTd.svelte";
@@ -68,13 +69,16 @@
             if (hexEditor.isValidRiffFile) {
                 localStorage.setItem('file', JSON.stringify(res))
                 localStorage.setItem('filename', inputFileName)
+                localStorage.setItem('activeTab', 0)
 
                 filename = inputFileName
+                activeTab = 0
 
                 isReady = true
             } else {
                 localStorage.removeItem('file')
                 localStorage.removeItem('filename')
+                localStorage.removeItem('activeTab')
 
                 isReady = false
             }
@@ -171,32 +175,38 @@
                                                             <Input inpSize={50} lblSize={120} disabled={true} id="partyItemsCount" label={hexEditor?.getLabel('partyItemsCount')} value={hexEditor?.readPartyValue('partyItemsCount')}/>
                                                         </fieldset>
                                                         {#if (hexEditor?.readPartyValue('partyItemsCount')) > 0}
-                                                        <fieldset style="height: 488px;max-height: 488px;overflow-y: scroll;padding-right: 0px;padding-bottom: 0;">
-                                                            <legend style="margin-bottom: 6px;">Party Items</legend>
-                                                            <table style="width: 100%;">
-                                                                <thead style="position: sticky;">
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>ID</th>
-                                                                        <th>Quantity</th>
-                                                                        <th>Charges</th>
-                                                                        <th>Identified</th>
-                                                                        <th>Uncursed</th>
-                                                                    </tr>
+                                                        <fieldset class="party-items">
+                                                            <legend>Party Items</legend>
+                                                            <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>ID</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Charges</th>
+                                                                    <th>Identified</th>
+                                                                    <th>Uncursed</th>
+                                                                </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    {#each Array(hexEditor?.readPartyValue('partyItemsCount')).fill(null).map((_, i) => i) as idx}
-                                                                        <tr>
-                                                                            <td style={`width: 20px;background-color: ${idx % 2 === 0 ? '#eee' : '#fff'};`}>{idx+1}</td>
-                                                                            <ItemTd idx={idx} id={`itemId_${idx}`} value={hexEditor?.readPartyItemValue('itemId', idx)}/>
-                                                                            <ItemTd idx={idx} id={`itemCount_${idx}`} value={hexEditor?.readPartyItemValue('itemCount', idx)}/>
-                                                                            <ItemTd idx={idx} id={`itemCharges_${idx}`} value={hexEditor?.readPartyItemValue('itemCharges', idx)}/>
-                                                                            <ItemTd idx={idx} id={`itemIsIdentified_${idx}`} value={hexEditor?.readPartyItemValue('itemIsIdentified', idx)}/>
-                                                                            <ItemTd idx={idx} id={`itemIsUncursed_${idx}`} value={hexEditor?.readPartyItemValue('itemIsUncursed', idx)}/>
-                                                                        </tr>
-                                                                    {/each}
+                                                                {#each Array(hexEditor?.readPartyValue('partyItemsCount')).fill(null).map((_, i) => i) as idx}
+                                                                    <tr>
+                                                                        <td style={`width: 20px;background-color: ${idx % 2 === 0 ? '#eee' : '#fff'};`}>{idx+1}</td>
+                                                                        <ItemTd idx={idx} id={`itemId_${idx}`} value={hexEditor?.readPartyItemValue('itemId', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemCount_${idx}`} value={hexEditor?.readPartyItemValue('itemCount', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemCharges_${idx}`} value={hexEditor?.readPartyItemValue('itemCharges', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemIsIdentified_${idx}`} value={hexEditor?.readPartyItemValue('itemIsIdentified', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemIsUncursed_${idx}`} value={hexEditor?.readPartyItemValue('itemIsUncursed', idx)}/>
+                                                                    </tr>
+                                                                {/each}
                                                                 </tbody>
                                                             </table>
+                                                        </fieldset>
+                                                        <fieldset class="item-ids">
+                                                            <legend>Item IDs</legend>
+                                                            {#each Array(Object.keys(items).length).fill(null).map((_, i) => i) as idx}
+                                                                <p>{idx} - {Object.values(items)[idx]}</p>
+                                                            {/each}
                                                         </fieldset>
                                                         {/if}
                                                     </div>
@@ -418,5 +428,35 @@
     fieldset {
         margin-top: 6px;
         padding-block-start: 0;
+    }
+
+    .party-items {
+        height: 488px;
+        max-height: 488px;
+        overflow-y: scroll;
+        padding-right: 0px;
+        padding-bottom: 0;
+        width: 500px;
+        float: left;
+        margin-right: 8px;
+    }
+
+    .party-items legend {
+        margin-bottom: 6px;
+    }
+
+    .party-items table {
+        width: 100%;
+    }
+
+    .party-items thead {
+        position: sticky;
+    }
+
+    .item-ids {
+        width: 170px;
+        height: 478px;
+        max-height: 478px;
+        overflow-y: scroll;
     }
 </style>

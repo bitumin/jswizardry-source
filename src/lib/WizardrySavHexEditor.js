@@ -6,6 +6,7 @@ export class WizardrySavHexEditor {
     _partyOffset
     _charactersOffsets = []
     _partyItemsOffsets = []
+    _spellsCount = 101
 
     constructor(uint8array) {
         let hexArray = []
@@ -24,6 +25,10 @@ export class WizardrySavHexEditor {
         return this._isValidRiffFile
     }
 
+    get spellsCount() {
+        return this._spellsCount
+    }
+
     exportAsInt8Array() {
         return new Uint8Array(this._hexArray.map(byte => parseInt(byte, 16)));
     }
@@ -36,6 +41,14 @@ export class WizardrySavHexEditor {
         return this._readOffsetValue(field)
     }
 
+    readPartyValue(fieldKey) {
+        const field = fields[fieldKey]
+        if (!field) {
+            throw `Invalid field ${fieldKey}`
+        }
+        return this._readOffsetValue({...field, offset: this._partyOffset + field.offset})
+    }
+
     readCharValue(fieldKey, charIdx) {
         const field = fields[fieldKey]
         if (!field) {
@@ -46,14 +59,6 @@ export class WizardrySavHexEditor {
             throw `Invalid character index ${charIdx}`
         }
         return this._readOffsetValue({...field, offset: startOffset + field.offset})
-    }
-
-    readPartyValue(fieldKey) {
-        const field = fields[fieldKey]
-        if (!field) {
-            throw `Invalid field ${fieldKey}`
-        }
-        return this._readOffsetValue({...field, offset: this._partyOffset + field.offset})
     }
 
     readPartyItemValue(fieldKey, itemIdx) {
@@ -184,14 +189,11 @@ export class WizardrySavHexEditor {
             case 'int':
                 switch (size) {
                     case 1:
-                        const int8 = this._getIntLittleEndian(offset, size)
-                        return int8 < 128 ? int8 : -(256 - int8)
                     case 2:
-                        const int16 = this._getIntLittleEndian(offset, size)
-                        return int16 < 32768 ? int16 : -(65536 - int16)
                     case 4:
-                        const int32 = this._getIntLittleEndian(offset, size)
-                        return int32 < 2147483648 ? int32 : -(4294967296 - int32)
+                        const int = this._getIntLittleEndian(offset, size)
+                        const maxInt = Math.pow(256, size);
+                        return int < (maxInt/2) ? int : -(maxInt - int)
                     default:
                         throw `Field getter not defined for type ${type} and size ${size}`
                 }
@@ -226,16 +228,11 @@ export class WizardrySavHexEditor {
             case 'int':
                 switch (size) {
                     case 1:
-                        const int8 = parseInt(value)
-                        this._writeIntLittleEndian(offset, size, int8 < 0 ? 256 + int8 : int8)
-                        break
                     case 2:
-                        const int16 = parseInt(value)
-                        this._writeIntLittleEndian(offset, size, int16 < 0 ? 65536 + int16 : int16)
-                        break
                     case 4:
-                        const int32 = parseInt(value)
-                        this._writeIntLittleEndian(offset, size, int32 < 0 ? 4294967296 + int32 : int32)
+                        const int = parseInt(value)
+                        const maxInt = Math.pow(256, size);
+                        this._writeIntLittleEndian(offset, size, int < 0 ? maxInt + int : int)
                         break
                     default:
                         throw `Field setter not defined for type ${type} and size ${size}`
