@@ -150,12 +150,12 @@
                                     <div class="character-window">
                                         <div class="tabs-column">
                                             <div class="tabs">
-                                                <div class="tab" class:active={activeTab === 0} on:click={() => onTabClick(0)}>Party</div>
+                                                <div role="tab" tabindex={0} class="tab" class:active={activeTab === 0} on:click={() => onTabClick(0)} on:keydown={()=>{}}>Party</div>
                                                 {#each Array(hexEditor?.readPartyValue('totalPartyCount') - hexEditor?.readPartyValue('createdPartyCount')).fill(null).map((_, i) => i) as idx}
-                                                    <div class="tab" class:active={activeTab === idx + 1} on:click={() => onTabClick(idx + 1)}>RPC {(idx + 1)}</div>
+                                                    <div role="tab" tabindex={idx + 1} class="tab" class:active={activeTab === idx + 1} on:click={() => onTabClick(idx + 1)} on:keydown={()=>{}}>RPC {(idx + 1)}</div>
                                                 {/each}
                                                 {#each Array(hexEditor?.readPartyValue('createdPartyCount')).fill(null).map((_, i) => i) as idx}
-                                                    <div class="tab" class:active={activeTab === idx + 3} on:click={() => onTabClick(idx + 3)}>PC {(idx + 1)}</div>
+                                                    <div role="tab" tabindex={idx + 3} class="tab" class:active={activeTab === idx + 3} on:click={() => onTabClick(idx + 3)} on:keydown={()=>{}}>PC {(idx + 1)}</div>
                                                 {/each}
                                             </div>
                                             <div class="tab-contents">
@@ -402,7 +402,6 @@
     }
 
     .open-button {
-        display: inline-block !important;
         float: left;
         height: 24px;
         width: 23px;
@@ -414,7 +413,6 @@
     }
 
     .save-button {
-        display: inline-block !important;
         float: left;
         height: 24px;
         width: 23px;
@@ -434,7 +432,7 @@
         height: 488px;
         max-height: 488px;
         overflow-y: scroll;
-        padding-right: 0px;
+        padding-right: 0;
         padding-bottom: 0;
         width: 500px;
         float: left;
