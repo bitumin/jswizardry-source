@@ -152,10 +152,14 @@
                                             <div class="tabs">
                                                 <div role="tab" tabindex={0} class="tab" class:active={activeTab === 0} on:click={() => onTabClick(0)} on:keydown={()=>{}}>Party</div>
                                                 {#each Array(hexEditor?.readPartyValue('totalPartyCount') - hexEditor?.readPartyValue('createdPartyCount')).fill(null).map((_, i) => i) as idx}
-                                                    <div role="tab" tabindex={idx + 1} class="tab" class:active={activeTab === idx + 1} on:click={() => onTabClick(idx + 1)} on:keydown={()=>{}}>RPC {(idx + 1)}</div>
+                                                    <div role="tab" tabindex={idx + 1} class="tab" class:active={activeTab === idx + 1} on:click={() => onTabClick(idx + 1)} on:keydown={()=>{}}>
+                                                        {hexEditor?.readCharValue('nickname', idx )}
+                                                    </div>
                                                 {/each}
                                                 {#each Array(hexEditor?.readPartyValue('createdPartyCount')).fill(null).map((_, i) => i) as idx}
-                                                    <div role="tab" tabindex={idx + 3} class="tab" class:active={activeTab === idx + 3} on:click={() => onTabClick(idx + 3)} on:keydown={()=>{}}>PC {(idx + 1)}</div>
+                                                    <div role="tab" tabindex={idx + 3} class="tab" class:active={activeTab === idx + 3} on:click={() => onTabClick(idx + 3)} on:keydown={()=>{}}>
+                                                        {hexEditor?.readCharValue('nickname', idx + 2)}
+                                                    </div>
                                                 {/each}
                                             </div>
                                             <div class="tab-contents">

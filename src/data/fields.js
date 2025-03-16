@@ -11,7 +11,7 @@ export const fields = {
      *    - Each party item is made of 12 bytes.
      *    - Empty item slot = FF FF FF FF 00 00 00 00 00 00 00 00.
      *    - Max 500 items in party inventory.
-     *    - XP/level: https://www.zimlab.com/wizardry/recovered/flamestryke/wizardry8/charinfow8/experience.html
+     *    - XP tables: https://www.zimlab.com/wizardry/recovered/flamestryke/wizardry8/charinfow8/experience.html
      *    - Items: https://www.tk421.net/wizardry/wiz8items.shtml
      */
 
@@ -44,8 +44,8 @@ export const fields = {
 
     // ----- Player Character: Recruited or Created
     // inParty: {offset: 0x0004, size: 1, type: 'int', label: 'In Party', segment: 'pc'}, // TODO if we shift all pc segment values +5 bytes, we could use this one as well
-    nickname: {offset: 0x0000, size: 9, type: 'char', label: 'Nickname', segment: 'pc'},
-    name: {offset: 0x0014, size: 39, type: 'char', label: 'Name', segment: 'pc'},
+    nickname: {offset: 0x0000, size: 18, type: 'char', label: 'Nickname', segment: 'pc'},
+    name: {offset: 0x0014, size: 78, type: 'char', label: 'Name', segment: 'pc'},
     currentProfession: {offset: 0x0064, size: 4, type: 'int', label: 'Current Profession', segment: 'pc'},
     startingProfession: {offset: 0x0068, size: 4, type: 'int', label: 'Starting Profession', segment: 'pc'},
     race: {offset: 0x006C, size: 4, type: 'int', label: 'Race', segment: 'pc'},
