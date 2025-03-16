@@ -185,7 +185,11 @@
                                                                     <th>Quantity</th>
                                                                     <th>Charges</th>
                                                                     <th>Identified</th>
+                                                                    <th>Flag 1</th>
+                                                                    <th>Flag 2</th>
+                                                                    <th>Flag 3</th>
                                                                     <th>Uncursed</th>
+                                                                    <th>Flag 4</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -196,7 +200,11 @@
                                                                         <ItemTd idx={idx} id={`itemCount_${idx}`} value={hexEditor?.readPartyItemValue('itemCount', idx)}/>
                                                                         <ItemTd idx={idx} id={`itemCharges_${idx}`} value={hexEditor?.readPartyItemValue('itemCharges', idx)}/>
                                                                         <ItemTd idx={idx} id={`itemIsIdentified_${idx}`} value={hexEditor?.readPartyItemValue('itemIsIdentified', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemFlag1_${idx}`} value={hexEditor?.readPartyItemValue('itemFlag1', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemFlag2_${idx}`} value={hexEditor?.readPartyItemValue('itemFlag2', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemFlag3_${idx}`} value={hexEditor?.readPartyItemValue('itemFlag3', idx)}/>
                                                                         <ItemTd idx={idx} id={`itemIsUncursed_${idx}`} value={hexEditor?.readPartyItemValue('itemIsUncursed', idx)}/>
+                                                                        <ItemTd idx={idx} id={`itemFlag4_${idx}`} value={hexEditor?.readPartyItemValue('itemFlag4', idx)}/>
                                                                     </tr>
                                                                 {/each}
                                                                 </tbody>

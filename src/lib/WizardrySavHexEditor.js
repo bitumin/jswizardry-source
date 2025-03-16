@@ -1,4 +1,4 @@
-import {fields} from "../data/fields"
+import { fields } from "../data/fields"
 
 export class WizardrySavHexEditor {
     _hexArray
@@ -6,7 +6,7 @@ export class WizardrySavHexEditor {
     _partyOffset
     _charactersOffsets = []
     _partyItemsOffsets = []
-    _spellsCount = 101
+    _spellsCount = 131
 
     constructor(uint8array) {
         let hexArray = []
@@ -147,9 +147,9 @@ export class WizardrySavHexEditor {
         return parseInt('0x' + this._hexArray.slice(offset, offset + size).reverse().join(''), 16)
     }
 
-    _getIntBigEndian(offset, size) {
-        return parseInt('0x' + this._hexArray.slice(offset, offset + size).join(''), 16)
-    }
+    // _getIntBigEndian(offset, size) {
+    //     return parseInt('0x' + this._hexArray.slice(offset, offset + size).join(''), 16)
+    // }
 
     _getCharsString(offset, size, removePadding = true) {
         if (!removePadding) {
@@ -193,7 +193,7 @@ export class WizardrySavHexEditor {
                     case 4:
                         const int = this._getIntLittleEndian(offset, size)
                         const maxInt = Math.pow(256, size);
-                        return int < (maxInt/2) ? int : -(maxInt - int)
+                        return int < (maxInt / 2) ? int : -(maxInt - int)
                     default:
                         throw `Field getter not defined for type ${type} and size ${size}`
                 }
@@ -205,7 +205,7 @@ export class WizardrySavHexEditor {
     }
 
     _writeIntLittleEndian(offset, size, value) {
-        const newHexValues = parseInt(value, 10).toString(16).padStart(size * 2 , '0').match(/.{2}/g).reverse()
+        const newHexValues = parseInt(value, 10).toString(16).padStart(size * 2, '0').match(/.{2}/g).reverse()
         for (let i = 0, iMax = size; i < iMax; i++) {
             this._hexArray[offset + i] = newHexValues[i]
         }

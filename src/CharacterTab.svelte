@@ -112,8 +112,10 @@
     <fieldset style="margin-bottom: 6px;">
         <legend>Known Spells</legend>
         {#each Array(hexEditor?.spellsCount).fill(null).map((_, i) => i) as idx}
-            <Input lblSize={110} id={`spell${idx+1}_${chrIdx}`} label={spells[idx+1] ?? hexEditor?.getLabel(`spell${idx+1}`)} value={hexEditor?.readCharValue(`spell${idx+1}`, chrIdx)}/>
-      {/each}
+            {#if idx < 101 || idx > 112}
+                <Input lblSize={110} id={`spell${idx+1}_${chrIdx}`} label={spells[idx+1] ?? hexEditor?.getLabel(`spell${idx+1}`)} value={hexEditor?.readCharValue(`spell${idx+1}`, chrIdx)}/>
+            {/if}
+        {/each}
     </fieldset>
 </div>
 <style>
