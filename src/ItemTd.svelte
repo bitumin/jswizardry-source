@@ -8,7 +8,7 @@
 <td contenteditable="true"
     bind:textContent={value}
     style={`background-color: ${idx % 2 === 0 ? '#eee' : '#fff'};`}
-    title={items[value] ?? 'Item not found'}/>
+    title={items[value] ?? 'No item'}/>
 <input type="hidden" id={id} name={id} value="{value}" />
 <style>
     td {
